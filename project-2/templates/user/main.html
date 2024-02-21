@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: #3498db;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 20px;
+            margin-right: 20px;
+        }
+
+        .navbar-right {
+            margin-left: auto;
+        }
+
+        .main-container {
+            margin-top: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #217dbb;
+        }
+
+        .flights-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .flight-block {
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            text-align: left;
+            max-width: 300px;
+        }
+
+        .flight-block h3 {
+            color: #333333;
+        }
+
+        .flight-block p {
+            margin: 8px 0;
+            color: #666666;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #217dbb;
+        }
+
+        .logout-btn {
+            background-color: #e74c3c;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        img {
+            align-items: center;
+            max-width: 40%;
+            height: auto;
+        }
+        .message {
+            color: red;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <a href="{{ url_for('main') }}">Flight Booking App</a>
+            </div>
+            <div class="navbar-right">
+                <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+            </div>
+        </nav>
+
+        <div class="main-container">
+            {% if message %}
+                <div class="message">
+            {{ message }}
+                </div>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('main') }}">
+                <label for="date">Search Flights:</label>
+                <input type="date" name="date" required>
+                <label for="time">Time:</label>
+                <input type="time" name="time" >
+                <button type="submit" class="btn-primary">Search</button>
+            </form>
+
+            <div class="flights-list">
+                {% for flight in available_flights %}
+                    <div class="flight-block">
+                        <img src="static/flight1.jpg" alt="">
+                        <h3>{{ flight[1] }}</h3>
+                        <p>Departure: {{ flight[2] }}</p>
+                        <p>Arrival: {{ flight[3] }}</p>
+                        <p>Date: {{ flight[4].strftime('%Y-%m-%d') }}</p>
+                        <p>Time: {{ flight[4].strftime('%H:%M') }}</p>
+                        <p>Available Seats: {{ flight[5] }}</p>
+                        
+                        <a href="{{ url_for('book_flight', flight_id=flight[0]) }}" class="btn-primary">Book Flight</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

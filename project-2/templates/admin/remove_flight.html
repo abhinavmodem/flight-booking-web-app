@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking App - Remove Flight</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .navbar {
+            background-color: #3498db;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar-left a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .navbar-right a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .admin-content {
+            margin-top: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: #ffffff;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-primary {
+            text-decoration: none;
+            padding:10px;
+            background-color: #3498db;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #217dbb;
+        }
+        p.message {
+            color: red;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <a href="{{ url_for('admin_dashboard') }}">Flight Booking App</a>
+            </div>
+        </nav>
+
+        <div class="admin-content">
+            <h3>Remove Flight</h3>
+            {% if message %}
+            <p>{{ message }}</p>
+            {% endif %}
+            <form method="POST" action="{{ url_for('remove_flight') }}">
+                
+                <label for="flight_number">Flight Number:</label>
+                <input type="text" name="flight_number" required>
+                
+                <label for="departure_time">Departure Date and Time:</label>
+                <input type="datetime-local" name="departure_time" required>>
+
+                <button type="submit" class="btn btn-danger">Remove Flight</button>
+            </form>
+
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
